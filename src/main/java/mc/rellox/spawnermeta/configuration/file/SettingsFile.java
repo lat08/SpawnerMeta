@@ -16,7 +16,7 @@ import mc.rellox.spawnermeta.spawner.type.SpawnerType;
 import mc.rellox.spawnermeta.spawner.type.UpgradeType;
 
 public class SettingsFile extends AbstractFile {
-	
+
 	private static final int version = 11;
 
 	public SettingsFile() {
@@ -27,20 +27,21 @@ public class SettingsFile extends AbstractFile {
 	protected void initialize() {
 		CF.version = file.getInt("Configuration-version");
 
-		if(CF.version < 2) {
+		if (CF.version < 2) {
 			copy("Modifiers.breaking.enabled", "Modifiers.breaking.ignore-permission");
 			delete("Modifiers.spawner-item");
 		}
-		if(CF.version < 3) {
+		if (CF.version < 3) {
 			copy("Modifiers.holograms.enabled", "Modifiers.holograms.regular.enabled");
 			copy("Modifiers.holograms.show-natural", "Modifiers.holograms.regular.show-natural");
 			copy("Spawners.nearby-entity-limit", "Spawners.nearby-entities.limit");
 		}
-		if(CF.version < 4) {
+		if (CF.version < 4) {
 			copy("Modifiers.breaking.permissions", "Modifiers.breaking.chance-permissions");
 			int limit = getInteger("Modifiers.stacking.spawner-limit");
 			copy("Modifiers.stacking.spawner-limit", "Modifiers.stacking.spawner-limit.natural");
-			if(limit <= 0) limit = 16;
+			if (limit <= 0)
+				limit = 16;
 			hold("Modifiers.stacking.spawner-limit.owned", limit);
 			hold("Modifiers.stacking.spawner-limit.not-owned", limit);
 			copy("Commands.spawner-view", "Commands.spawner-view.label");
@@ -49,35 +50,36 @@ public class SettingsFile extends AbstractFile {
 			copy("Commands.spawner-locations", "Commands.spawner-locations.label");
 			delete("Spawner-version");
 		}
-		if(CF.version < 5) {
+		if (CF.version < 5) {
 			copy("Spawners.checking-ticks", "Spawners.validation-interval");
 		}
-		if(CF.version < 6) {
+		if (CF.version < 6) {
 			int r = getInteger("Spawners.spawning-radius");
-			if(r <= 0) r = 3;
+			if (r <= 0)
+				r = 3;
 			hold("Spawners.spawning-radius.horizontal", r);
 			hold("Spawners.spawning-radius.vertical", r);
 		}
-		if(CF.version < 8) {
+		if (CF.version < 8) {
 			copy("Spawners.kill-entities-on-spawn", "Spawners.instant-kill.enabled");
 			copy("Spawners.drop-xp-when-instant-kill", "Spawners.instant-kill.drop-xp");
 		}
-		if(CF.version < 10) {
+		if (CF.version < 10) {
 			copy("Spawners.required-redstone-power", "Spawners.redstone-power.required");
 		}
-		if(CF.version < 11) {
+		if (CF.version < 11) {
 			delete("Spawners.delayed-chunk-loading");
 		}
 
 		file.addDefault("Debug-errors", true);
-		
+
 		file.addDefault("Spawners.values.DEFAULT.range", 16);
 		file.addDefault("Spawners.values.DEFAULT.delay", 500);
 		file.addDefault("Spawners.values.DEFAULT.amount", 4);
 		file.addDefault("Spawners.value-increase.DEFAULT.range", 4);
 		file.addDefault("Spawners.value-increase.DEFAULT.delay", -75);
 		file.addDefault("Spawners.value-increase.DEFAULT.amount", 1);
-		
+
 		file.addDefault("Spawners.spawning-type", "SPREAD");
 		file.addDefault("Spawners.spawning-radius.horizontal", 3);
 		file.addDefault("Spawners.spawning-radius.vertical", 3);
@@ -89,18 +91,18 @@ public class SettingsFile extends AbstractFile {
 		file.addDefault("Spawners.check-if-present.interval", 1200);
 		file.addDefault("Spawners.tick-until-zero", false);
 		file.addDefault("Spawners.delay-offset", 5);
-		
+
 		file.addDefault("Spawners.reset-spawner-values", false);
-		
+
 		file.addDefault("Spawners.switching", false);
-		
+
 		file.addDefault("Spawners.empty.enabled", false);
 		file.addDefault("Spawners.empty.destroy-eggs.when-removing", false);
 		file.addDefault("Spawners.empty.destroy-eggs.when-breaking", false);
 		file.addDefault("Spawners.empty.store-eggs-inside", false);
 		file.addDefault("Spawners.empty.egg-removing-verify", false);
 		file.addDefault("Spawners.empty.remove-from-regular", false);
-		
+
 		file.addDefault("Spawners.disabled-spawners", List.of());
 		file.addDefault("Spawners.ignored-spawners", List.of());
 		file.addDefault("Spawners.ignore-natural", false);
@@ -110,40 +112,40 @@ public class SettingsFile extends AbstractFile {
 		file.addDefault("Spawners.owner-warning-particles", true);
 		file.addDefault("Spawners.disable-item-spawners", false);
 		file.addDefault("Spawners.warning-particles", true);
-		
+
 		file.addDefault("Spawners.spawning-reason", SpawnReason.SPAWNER.name());
-		
+
 		file.addDefault("Spawners.allow-renaming", true);
-		
+
 		file.addDefault("Spawners.nearby-entities.limit", 8);
 		file.addDefault("Spawners.nearby-entities.reduce", false);
-		
+
 		file.addDefault("Spawners.instant-kill.enabled", false);
 		file.addDefault("Spawners.instant-kill.drop-xp", true);
 		file.addDefault("Spawners.instant-kill.death-animation", true);
-		
+
 		file.addDefault("Spawners.redstone-power.required", 0);
 		file.addDefault("Spawners.redstone-power.ignore-natural", true);
 		file.addDefault("Spawners.redstone-power.disable-with-power", false);
-		
+
 		file.addDefault("Spawners.default-slime-size", 0);
-		
+
 		file.addDefault("Events.cancel-spawning-event", true);
 		file.addDefault("Events.send-spawner-event", false);
 		file.addDefault("Events.cancel-break-event", true);
 		file.addDefault("Events.ignore-break-event", false);
 		file.addDefault("Events.check-island-kick", true);
-		
+
 		file.addDefault("Items.taking-ticks", 60 * 20);
 		file.addDefault("Items.taking-remind-ticks", 30 * 20);
-		
+
 		file.addDefault("Modifiers.holograms.regular.enabled", false);
 		file.addDefault("Modifiers.holograms.regular.show-natural", false);
 		file.addDefault("Modifiers.holograms.regular.radius", 32);
 		file.addDefault("Modifiers.holograms.warning.enabled", true);
 		file.addDefault("Modifiers.holograms.warning.radius", 32);
 		file.addDefault("Modifiers.holograms.height", 0);
-		
+
 		file.addDefault("Modifiers.upgrade-interface.enabled", true);
 		UpgradeType.stream().forEach(type -> {
 			file.addDefault("Modifiers.upgrades.upgradeable.DEFAULT." + type.lower(), true);
@@ -152,7 +154,7 @@ public class SettingsFile extends AbstractFile {
 			file.addDefault("Modifiers.upgrades.price-increase.DEFAULT." + type.lower(), 50);
 		});
 		file.addDefault("Modifiers.upgrades.price-increase-type", IncreaseType.ADDITION.name());
-		
+
 		file.addDefault("Modifiers.charges.enabled", false);
 		file.addDefault("Modifiers.charges.comparision", false);
 		file.addDefault("Modifiers.charges.consume.DEFAULT", 1);
@@ -163,7 +165,7 @@ public class SettingsFile extends AbstractFile {
 		file.addDefault("Modifiers.charges.buy-amount.second", 128);
 		file.addDefault("Modifiers.charges.prices.DEFAULT", 2);
 		file.addDefault("Modifiers.charges.ignore-levels", false);
-		
+
 		file.addDefault("Modifiers.changing.enabled", false);
 		file.addDefault("Modifiers.changing.use-price", false);
 		file.addDefault("Modifiers.changing.prices.DEFAULT", 100);
@@ -172,11 +174,11 @@ public class SettingsFile extends AbstractFile {
 		file.addDefault("Modifiers.changing.deny.to", List.of());
 		file.addDefault("Modifiers.changing.reset-upgrades.regular", false);
 		file.addDefault("Modifiers.changing.reset-upgrades.empty", false);
-		
+
 		file.addDefault("Modifiers.placing.enabled", true);
 		file.addDefault("Modifiers.placing.use-price", false);
 		file.addDefault("Modifiers.placing.prices.DEFAULT", 100);
-		
+
 		file.addDefault("Modifiers.stacking.enabled", false);
 		file.addDefault("Modifiers.stacking.use-price", false);
 		file.addDefault("Modifiers.stacking.stack-all", false);
@@ -194,6 +196,10 @@ public class SettingsFile extends AbstractFile {
 		file.addDefault("Modifiers.stacking.affected-by-permissions.owned", true);
 		file.addDefault("Modifiers.stacking.affected-by-permissions.not-owned", false);
 
+		// Merge on place settings
+		file.addDefault("Modifiers.stacking.merge-on-place.enabled", false);
+		file.addDefault("Modifiers.stacking.merge-on-place.radius", 1);
+
 		file.addDefault("Modifiers.breaking.unbreakable", false);
 		file.addDefault("Modifiers.breaking.ignore-permission", false);
 		file.addDefault("Modifiers.breaking.use-price", false);
@@ -209,10 +215,11 @@ public class SettingsFile extends AbstractFile {
 		file.addDefault("Modifiers.breaking.silk-requirement.break-owned", true);
 		file.addDefault("Modifiers.breaking.silk-requirement.break-natural", true);
 		file.addDefault("Modifiers.breaking.silk-requirement.destroy-on-fail", true);
+		file.addDefault("Modifiers.breaking.silk-requirement.break-single", false);
 		file.addDefault("Modifiers.breaking.enable-durability", false);
 		file.addDefault("Modifiers.breaking.durability-to-remove", 1);
 		file.addDefault("Modifiers.breaking.chance-permissions.example", 100);
-		
+
 		file.addDefault("Modifiers.breaking.xp-on-failure", isNew() ? 20 : 0);
 		file.addDefault("Modifiers.breaking.show-owner", false);
 
@@ -225,9 +232,9 @@ public class SettingsFile extends AbstractFile {
 		file.addDefault("Modifiers.spawn-with-equipment", true);
 		file.addDefault("Modifiers.spawn-jockeys", true);
 		file.addDefault("Modifiers.modify-stacked-entities", true);
-		
+
 		file.addDefault("Modifiers.safety-limit", 128);
-		
+
 		file.addDefault("Modifiers.chunk-limits.enabled", false);
 		file.addDefault("Modifiers.chunk-limits.spawner-limit", 16);
 		file.addDefault("Modifiers.chunk-limits.entities-in-chuck", 0);
@@ -243,7 +250,7 @@ public class SettingsFile extends AbstractFile {
 		file.addDefault("Modifiers.players.owned.can-open", true);
 		file.addDefault("Modifiers.players.owned.can-upgrade", true);
 		file.addDefault("Modifiers.players.owned.limit-permissions.example", 32);
-		
+
 		file.addDefault("Modifiers.players.natural.can-break", true);
 		file.addDefault("Modifiers.players.natural.can-stack", true);
 		file.addDefault("Modifiers.players.natural.can-change", true);
@@ -259,22 +266,22 @@ public class SettingsFile extends AbstractFile {
 		file.addDefault("Modifiers.spawnable.entity-amount.DEFAULT", 5000);
 
 		List.of(ExplosionType.values())
-		.forEach(type -> {
-			file.addDefault("Miscellaneous.explosions." + type.name() + ".break-spawners", true);
-			file.addDefault("Miscellaneous.explosions." + type.name() + ".drop-spawners", true);
-			file.addDefault("Miscellaneous.explosions." + type.name() + ".break-natural-spawners", true);
-			file.addDefault("Miscellaneous.explosions." + type.name() + ".drop-natural-spawners", true);
-		});
+				.forEach(type -> {
+					file.addDefault("Miscellaneous.explosions." + type.name() + ".break-spawners", true);
+					file.addDefault("Miscellaneous.explosions." + type.name() + ".drop-spawners", true);
+					file.addDefault("Miscellaneous.explosions." + type.name() + ".break-natural-spawners", true);
+					file.addDefault("Miscellaneous.explosions." + type.name() + ".drop-natural-spawners", true);
+				});
 
 		file.addDefault("Spawner-view.enabled", true);
-		file.addDefault("Spawner-view.ignore-entities", 
+		file.addDefault("Spawner-view.ignore-entities",
 				Stream.of(SpawnerType.ARMOR_STAND, SpawnerType.BOAT, SpawnerType.EXPERIENCE_BOTTLE,
-		SpawnerType.EXPERIENCE_ORB, SpawnerType.MINECART, SpawnerType.MINECART_CHEST,
-		SpawnerType.MINECART_COMMAND, SpawnerType.MINECART_FURNACE, SpawnerType.MINECART_HOPPER,
-		SpawnerType.MINECART_SPAWNER, SpawnerType.MINECART_TNT)
-				.map(SpawnerType::name)
-				.toList());
-		
+						SpawnerType.EXPERIENCE_ORB, SpawnerType.MINECART, SpawnerType.MINECART_CHEST,
+						SpawnerType.MINECART_COMMAND, SpawnerType.MINECART_FURNACE, SpawnerType.MINECART_HOPPER,
+						SpawnerType.MINECART_SPAWNER, SpawnerType.MINECART_TNT)
+						.map(SpawnerType::name)
+						.toList());
+
 		file.addDefault("Commands.spawner-view.label", "spawnerview");
 		file.addDefault("Commands.spawner-view.aliases", List.of());
 		file.addDefault("Commands.spawner-shop.label", "spawnershop");
@@ -285,7 +292,7 @@ public class SettingsFile extends AbstractFile {
 		file.addDefault("Commands.spawner-locations.aliases", List.of());
 		file.addDefault("Commands.spawner-trust.label", "spawnertrust");
 		file.addDefault("Commands.spawner-trust.aliases", List.of());
-		
+
 		PriceType type = PriceType.EXPERIENCE;
 		file.addDefault("Prices.upgrades.price-type", type.name());
 		file.addDefault("Prices.upgrades.item.material", Material.GOLD_INGOT.name());
@@ -301,28 +308,28 @@ public class SettingsFile extends AbstractFile {
 		file.addDefault("Prices.breaking.item.material", Material.GOLD_INGOT.name());
 		file.addDefault("Prices.changing.price-type", type.name());
 		file.addDefault("Prices.changing.item.material", Material.GOLD_INGOT.name());
-		
+
 		file.addDefault("Prices.format.use-delimiter", false);
 		file.addDefault("Prices.format.delimiter", ",");
 		file.addDefault("Prices.format.use-abbreviations", false);
 		file.addDefault("Prices.format.abbreviations", List.of("k", "m", "b", "t"));
-		
+
 		file.addDefault("Hooks.plot-squared.use-plot-filter", true);
-		
+
 		file.set("Configuration-version", version);
 
 		file.options().copyDefaults(true);
-		
+
 		header("In this file you can configure all plugin values.",
 				"To reload this file do /sm update configuration");
-		
-		if(isNew() == true) {
+
+		if (isNew() == true) {
 			save();
 			create();
 		}
-		
+
 		Commenter c = commenter();
-		if(c != null) {
+		if (c != null) {
 			c.comment("Spawners.disabled-spawners",
 					"List of disabled spawners.",
 					"Players will not be able to place, break, change",
@@ -501,7 +508,7 @@ public class SettingsFile extends AbstractFile {
 					"  32 block radius.");
 			c.comment("Spawners.instant-kill.death-animation",
 					"Should the death animation be displayed.");
-			
+
 			c.comment("Spawners.redstone-power.required",
 					"The required redstone power for this spawner",
 					"  to spawn. [0-15]",
@@ -513,7 +520,7 @@ public class SettingsFile extends AbstractFile {
 					"If enabled then player will be able to disable",
 					"  spawner with redstone power (level, redstone block).",
 					"When enabled will ignore the 'required' value.");
-			
+
 			c.comment("Spawners.default-slime-size",
 					"What size slimes and magma cubes spawners will spawn.",
 					"If the value is 0 then the size will vary (1, 2 or 4).");
@@ -738,6 +745,22 @@ public class SettingsFile extends AbstractFile {
 					"Does stacking limit bypass owned spawners.");
 			c.comment("Modifiers.stacking.affected-by-permissions.not-owned",
 					"Does stacking limit bypass other player owned spawners.");
+			c.comment("Modifiers.stacking.merge-on-place.enabled",
+					"If enabled, players can auto-merge spawners by placing",
+					"  a spawner near an existing spawner of the same type.",
+					"No shift-click required - just place near same type spawner.");
+			c.comment("Modifiers.stacking.merge-on-place.radius",
+					"The radius in which to search for spawners to merge into.",
+					"Radius interval: [1; 16]",
+					"Set to 0 to disable merge-on-place.");
+			c.comment("Modifiers.stacking.merge-on-place.radius-per-type",
+					"Set specific merge radius for each entity type.",
+					"Example:",
+					"  radius-per-type:",
+					"    COW: 5",
+					"    PIG: 3",
+					"    ZOMBIE: 0",
+					"Entity types not listed here will use the default radius.");
 			c.comment("Modifiers.breaking.unbreakable",
 					"Is this spawner unbreakable.",
 					"Players only with permission will",
@@ -798,12 +821,18 @@ public class SettingsFile extends AbstractFile {
 					"Is silk touch enchantment required",
 					"  to break spawners.");
 			c.comment("Modifiers.breaking.silk-requirement.level", "Minumum required silk touch enchantment level.");
-			c.comment("Modifiers.breaking.silk-requirement.break-owned", "Can player owned spawners be broken with silk touch.");
-			c.comment("Modifiers.breaking.silk-requirement.break-natural", "Can natural spawners be broken with silk touch.");
+			c.comment("Modifiers.breaking.silk-requirement.break-owned",
+					"Can player owned spawners be broken with silk touch.");
+			c.comment("Modifiers.breaking.silk-requirement.break-natural",
+					"Can natural spawners be broken with silk touch.");
 			c.comment("Modifiers.breaking.silk-requirement.destroy-on-fail",
 					"Will the spawner be destroyed if broken",
 					"  with a pickaxe that does not have",
 					"  silk touch enchantment.");
+			c.comment("Modifiers.breaking.silk-requirement.break-single",
+					"If enabled, only one spawner will be removed",
+					"  from a stacked spawner when broken",
+					"  with silk touch.");
 			c.comment("Modifiers.breaking.can-break-natural", "Are natural spawners breakable.");
 			c.comment("Modifiers.breaking.enable-durability", "Is durability loss enabled.");
 			c.comment("Modifiers.breaking.xp-on-failure",
@@ -954,7 +983,7 @@ public class SettingsFile extends AbstractFile {
 			c.comment("Prices.stacking", "Price type for stacking.");
 			c.comment("Prices.breaking", "Price type for breaking.");
 			c.comment("Prices.changing", "Price type for changing.");
-			
+
 			c.comment("Prices.format.use-delimiter",
 					"If true numbers will use",
 					"  a delimiter.",
@@ -981,18 +1010,18 @@ public class SettingsFile extends AbstractFile {
 					"- ...",
 					"You can change and extend this list.",
 					"Note, that the list order matters.");
-			
+
 			c.comment("Hooks.plot-squared.use-plot-filter",
 					"If true then the plugin will only allow players",
 					"  to interact with spawners if they are a part of a plot,",
 					"  and will only spawn entities inside the plot.");
-			
+
 			c.comment("Configuration-version", "Version of this configuration file.",
 					"Should not be changed.");
 		}
-		
+
 		save();
-		
+
 		Settings.reload();
 	}
 
